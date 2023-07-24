@@ -7,40 +7,44 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 2f;
     [SerializeField] private float moveSpeed = 2f;
 
-
-    
-    [Header("Ground")]    
+    [Header("Ground")]
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private Vector2 boxPositionOffset;
     [SerializeField] private float maxDistance;
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private bool isGrounded;
 
-    
     private Rigidbody2D rb;
     private Animator _animator;
-   
+
+    private bool isGrounded;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
+
     private void Start()
     {
         _animator.SetBool("isRunning", true);
     }
+
     private void Update()
     {
-        isGrounded = IsGrounded();
+        HandleGroundedState();
+        Run();
+    }
 
-       Run();
+    private void HandleGroundedState()
+    {
+        isGrounded = IsGrounded();
+        _animator.SetBool("isRunning", isGrounded);
+        _animator.SetBool("isJumping", !isGrounded);
     }
 
     private void Run()
     {
         rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-       
     }
 
     public void Jump(InputAction.CallbackContext context)
