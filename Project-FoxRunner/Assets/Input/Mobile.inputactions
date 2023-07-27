@@ -1,0 +1,60 @@
+{
+    "name": "Mobile",
+    "maps": [
+        {
+            "name": "Touch",
+            "id": "aa85bf6b-400e-4ef2-8b03-229d600e57df",
+            "actions": [
+                {
+                    "name": "Primary Contact",
+                    "type": "PassThrough",
+                    "id": "34963e0e-4669-49e5-b4c2-eeaa80625af6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Primary Position",
+                    "type": "PassThrough",
+                    "id": "5bbbfaf0-fa95-4586-99ef-29f1aec8c687",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1c4e216e-33bd-4952-ad27-91547eb4c601",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Primary Contact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8c7b709-e37e-4c34-a0ad-1e269bb0ec50",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Primary Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Mobile",
+            "bindingGroup": "Mobile",
+            "devices": []
+        }
+    ]
+}
