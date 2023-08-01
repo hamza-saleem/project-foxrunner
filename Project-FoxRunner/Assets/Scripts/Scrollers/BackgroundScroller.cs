@@ -8,21 +8,12 @@ public class BackgroundScroller : MonoBehaviour
 
     public float speed = 2f;
 
-    private Vector3 StartPosition;
+    [SerializeField] private Renderer backgroundRenderer;
 
-    private void Start()
-    {
-        StartPosition = transform.position;
-    }
-
+   
     private void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
-
-        if(Camera.main.transform.position.x > -3f)
-        {
-            transform.position = StartPosition;
-        }
+        backgroundRenderer.material.mainTextureOffset += new Vector2(speed * Time.deltaTime, 0);
     }
     
 

@@ -107,7 +107,7 @@ public class InputManager : Singleton<InputManager>
             if (OnSwipeUp != null)
             {
                 OnSwipeUp();
-                player.Jump();
+               // player.Jump();
             }
         }
         else if (Vector2.Dot(Vector2.down, direction) > directionThreshold)

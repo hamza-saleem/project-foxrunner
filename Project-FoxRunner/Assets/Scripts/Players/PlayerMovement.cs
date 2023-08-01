@@ -16,7 +16,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
     private Rigidbody2D rb;
     private Animator _animator;
 
-    private bool isGrounded;
+    [SerializeField]private bool isGrounded;
 
     private void Awake()
     {
@@ -26,13 +26,22 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
     private void Start()
     {
-        _animator.SetBool("isRunning", true);
+        _animator.SetBool("isIdle", true);
     }
 
     private void Update()
     {
-        HandleGroundedState();
-        Run();
+        if(GameManager.Instance.GameStart())
+        {
+            HandleGroundedState();
+            Run();
+        }
+
+        if (GameManager.Instance.GameOver())
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+          //  _animator.SetBool("isDead", true);
+        }
     }
 
     private void HandleGroundedState()
@@ -57,7 +66,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
     public void Jump()
     {
-        if (isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }

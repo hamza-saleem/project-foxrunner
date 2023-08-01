@@ -1,45 +1,46 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlatformGenerator : Singleton<PlatformGenerator>
 {
-   [SerializeField] private const float PLAYER_DISTANCE_SPAWN_LEVEL_PART = 28f;
+    [SerializeField] private const float PLAYER_DISTANCE_SPAWN_LEVEL_PART = 28f;
 
     [SerializeField] private Transform levelPart_Start;
     [SerializeField] private List<Transform> levelParts;
     [SerializeField] private Transform grid;
     [SerializeField] private PlayerMovement player;
 
-    [SerializeField] private float yLimit = 6f;
+    [SerializeField] private float yLimit;
+    [SerializeField] private Vector3 offset;
 
     private Vector3 lastEndPosition;
+
     private void Awake()
     {
         lastEndPosition = levelPart_Start.Find("EndPosition").position;
-        int spawncounter = 3;
+        int spawncounter = 2;
 
-        for(int i = 0; i < spawncounter; i++)
+        for (int i = 0; i < spawncounter; i++)
         {
-           SpawnPlatform();
+            SpawnPlatform();
         }
-
     }
 
     private void Update()
     {
         float playerYPosition = player.GetPosition().y;
+        float dist = Vector3.Distance(player.GetPosition(), lastEndPosition);
 
-        // Check if the player has not reached the Y position limit.
-        if (playerYPosition < yLimit)
+        if (lastEndPosition.y < yLimit && dist < PLAYER_DISTANCE_SPAWN_LEVEL_PART)
         {
-            float dist = Vector3.Distance(player.GetPosition(), lastEndPosition);
+            SpawnPlatform();
+        }
 
-            if (dist < PLAYER_DISTANCE_SPAWN_LEVEL_PART)
-            {
-                SpawnPlatform();
-            }
+        if (lastEndPosition.y > yLimit)
+        {
+            offset.y = Random.Range(-5f, -1f);
+            Debug.Log(offset);
+            lastEndPosition = lastEndPosition + offset;
         }
     }
 
@@ -47,14 +48,10 @@ public class PlatformGenerator : Singleton<PlatformGenerator>
     {
         Transform platformToSpawn = levelParts[Random.Range(0, levelParts.Count)];
         Transform lastlevelPartTransform;
-
-        if (lastEndPosition.y < 6)
-        {
-            lastlevelPartTransform = SpawnPlatform(platformToSpawn, lastEndPosition);
-            lastEndPosition = lastlevelPartTransform.Find("EndPosition").position;
-
-        }
+        lastlevelPartTransform = SpawnPlatform(platformToSpawn, lastEndPosition);
+        lastEndPosition = lastlevelPartTransform.Find("EndPosition").position;
     }
+
     private Transform SpawnPlatform(Transform levelPart, Vector3 spawnPosition)
     {
         Transform levelPartTransform = Instantiate(levelPart, spawnPosition, Quaternion.identity, grid);

@@ -9,12 +9,20 @@ public class UIManager : Singleton<UIManager>
 {
     public TextMeshProUGUI startText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI berryText;
     public Button pause;
     public Button reset;
     int score = 0;
     [SerializeField] private Transform player;
 
 
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+
+    }
 
     public void Pause()
     {
@@ -27,7 +35,7 @@ public class UIManager : Singleton<UIManager>
 
     public void ShowUI()
     {
-        if(GameManager.Instance.gameStarted)
+        if(gameManager.gameStarted)
         {
             startText.gameObject.SetActive(false);
             scoreText.gameObject.SetActive(true);
@@ -45,6 +53,8 @@ public class UIManager : Singleton<UIManager>
 
     private void OnGUI()
     {
-        scoreText.text = "Score : " + (score + (int)player.transform.position.x).ToString();
+        scoreText.text = (score + (int)player.transform.position.x).ToString();
+        berryText.text = gameManager.GetBerryCount().ToString();
+
     }
 }
