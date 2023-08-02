@@ -2,19 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [DefaultExecutionOrder(-1)]
 public class InputManager : Singleton<InputManager>
 {
     #region Events
-
-    public delegate void TapGesture();
-    public event TapGesture OnTap;
-
     public delegate void StartTouch(Vector2 position, float time);
     public event StartTouch OnStartTouch;
     public delegate void EndTouch(Vector2 position, float time);
     public event EndTouch OnEndTouch;
+
 
     public delegate void LeftSwipe();
     public event LeftSwipe OnSwipeLeft;
@@ -26,59 +24,51 @@ public class InputManager : Singleton<InputManager>
     public event DownSwipe OnSwipeDown;
     #endregion
 
-    #region Touch Thresholds
     [SerializeField] private float minimumDistance = 0.2f;
     [SerializeField] private float maximumTime = 1f;
     [SerializeField, Range(0f, 1f)] private float directionThreshold = 0.9f;
 
     private Vector2 startPosition, endPosition;
     private float startTime, endTime;
-    #endregion
 
-    #region instance
+    private Mobile playerControls;
     private PlayerMovement player;
-    #endregion
 
     private void Awake()
     {
+        playerControls = new Mobile();
         player = PlayerMovement.Instance;
     }
 
     private void OnEnable()
     {
+        playerControls.Enable();
         OnStartTouch += SwipeStart;
         OnEndTouch += SwipeEnd;
     }
 
     private void OnDisable()
     {
+        playerControls.Disable();
         OnStartTouch -= SwipeStart;
         OnEndTouch -= SwipeEnd;
     }
 
-
-    private void Update()
+    private void Start()
     {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                StartTouchPrimary(touch.position, Time.time);
-            }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                EndTouchPrimary(touch.position, Time.time);
-            }
-        }
+        playerControls.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
+        playerControls.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
+        
+
     }
 
-    private void StartTouchPrimary(Vector2 position, float time) { if (OnStartTouch != null) OnStartTouch(ScreenPosition(), time); }
-    private void EndTouchPrimary(Vector2 position, float time) { if (OnEndTouch != null) OnEndTouch(ScreenPosition(), time); }
-    private Vector2 ScreenPosition() { return Input.mousePosition; } // Legacy Input uses Input.mousePosition.
+    private void StartTouchPrimary(InputAction.CallbackContext ctx) { if (OnStartTouch != null) OnStartTouch(ScreenPosition(), (float)ctx.startTime); }
+    private void EndTouchPrimary(InputAction.CallbackContext ctx) { if (OnEndTouch != null) OnEndTouch(ScreenPosition(), (float)ctx.time); }
+
+    private Vector2 ScreenPosition() { return playerControls.Touch.PrimaryPosition.ReadValue<Vector2>(); }
 
     private void SwipeStart(Vector2 position, float time)
-    {
+    { 
         startPosition = position;
         startTime = time;
     }
@@ -107,7 +97,7 @@ public class InputManager : Singleton<InputManager>
             if (OnSwipeUp != null)
             {
                 OnSwipeUp();
-               // player.Jump();
+                player.Jump();
             }
         }
         else if (Vector2.Dot(Vector2.down, direction) > directionThreshold)

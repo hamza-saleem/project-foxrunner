@@ -42,10 +42,11 @@ public class GameManager : Singleton<GameManager>
 
         if (gameStarted && player.position.y < deathHeight)
         {
-            gameStarted=false;
             isGameOver = true;
             scrollCamera.enabled = false;
             bgScroll.enabled = false;
+
+           // UIManager.Instance.OnDeath();
         }
     }
 

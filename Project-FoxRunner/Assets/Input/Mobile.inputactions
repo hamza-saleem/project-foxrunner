@@ -54,7 +54,13 @@
         {
             "name": "Mobile",
             "bindingGroup": "Mobile",
-            "devices": []
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
         }
     ]
 }

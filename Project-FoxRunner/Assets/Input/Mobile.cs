@@ -76,7 +76,13 @@ public partial class @Mobile : IInputActionCollection2, IDisposable
         {
             ""name"": ""Mobile"",
             ""bindingGroup"": ""Mobile"",
-            ""devices"": []
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");

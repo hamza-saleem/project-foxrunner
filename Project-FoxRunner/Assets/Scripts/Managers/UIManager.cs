@@ -10,8 +10,12 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI startText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI berryText;
+    public TextMeshProUGUI myScorePause;
+    public TextMeshProUGUI myScoreGameOver;
+
     public Button pause;
     public Button reset;
+    public GameObject GameOver;
     int score = 0;
     [SerializeField] private Transform player;
 
@@ -44,6 +48,11 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    public void OnDeath()
+    {
+        GameOver.SetActive(true);
+    }
+
     public void ChangeScene(string name)
     {
         SceneManager.LoadScene(name);
@@ -55,6 +64,7 @@ public class UIManager : Singleton<UIManager>
     {
         scoreText.text = (score + (int)player.transform.position.x).ToString();
         berryText.text = gameManager.GetBerryCount().ToString();
-
+        myScoreGameOver.text = scoreText.text;
+        myScorePause.text = scoreText.text;
     }
 }
