@@ -58,8 +58,6 @@ public class InputManager : Singleton<InputManager>
     {
         playerControls.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
         playerControls.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
-        
-
     }
 
     private void StartTouchPrimary(InputAction.CallbackContext ctx) { if (OnStartTouch != null) OnStartTouch(ScreenPosition(), (float)ctx.startTime); }

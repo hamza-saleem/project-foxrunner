@@ -36,7 +36,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
     private void Update()
     {
-        if(GameManager.Instance.GameStart())
+        if(GameManager.Instance.GameStart() && !GameManager.Instance.GameOver())
         {
             HandleGroundedState();
             Run();

@@ -11,7 +11,6 @@ public class GameManager : Singleton<GameManager>
 
     public bool gameStarted = false;
     [SerializeField] private int berryCount = 0;
-    private int score = 0;
 
 
     [SerializeField] private Transform player;
