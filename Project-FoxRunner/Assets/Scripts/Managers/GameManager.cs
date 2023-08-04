@@ -33,11 +33,12 @@ public class GameManager : Singleton<GameManager>
 
         if(Input.GetMouseButton(0) && !gameStarted)
         {
+
+           // InputManager.Instance.StartControls();
             gameStarted = true;
             UIManager.Instance.ShowUI();
             scrollCamera.enabled = true;
             bgScroll.enabled = true;
-            InputManager.Instance.StartControls();
         }
 
         if (gameStarted && player.position.y < deathHeight)

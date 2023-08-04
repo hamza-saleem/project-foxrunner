@@ -679,8 +679,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelPart_Start: {fileID: 5322891560492998593}
   levelParts:
-  - {fileID: 8752924999179085485, guid: 87fc593e225eddb449b86ca98e0df357, type: 3}
-  - {fileID: 5434942691582600652, guid: 37bf58d47ee8d174bb0a09e153082fec, type: 3}
+  - {fileID: 832087564598881589, guid: 3d077ec240adc114282ad09d59b442a8, type: 3}
+  - {fileID: 3974900804050381801, guid: 0325b2efeabc19043ab05e17aa72d8d1, type: 3}
+  - {fileID: 4698690205499259768, guid: ccc955b78487b0b4fbd2836ec63e06bb, type: 3}
   grid: {fileID: 1787490221}
   player: {fileID: 1726553071}
   yLimit: 0

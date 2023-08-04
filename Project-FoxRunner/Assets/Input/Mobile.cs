@@ -38,12 +38,12 @@ public partial class @Mobile : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Primary Position"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""5bbbfaf0-fa95-4586-99ef-29f1aec8c687"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [

@@ -42,13 +42,15 @@ public class InputManager : Singleton<InputManager>
 
     private void OnEnable()
     {
-        playerControls.Disable();
+        playerControls.Enable();
         OnStartTouch += SwipeStart;
         OnEndTouch += SwipeEnd;
     }
 
     private void OnDisable()
     {
+
+        playerControls.Disable();
         OnStartTouch -= SwipeStart;
         OnEndTouch -= SwipeEnd;
     }
