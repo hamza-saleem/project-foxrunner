@@ -42,14 +42,13 @@ public class InputManager : Singleton<InputManager>
 
     private void OnEnable()
     {
-        playerControls.Enable();
+        playerControls.Disable();
         OnStartTouch += SwipeStart;
         OnEndTouch += SwipeEnd;
     }
 
     private void OnDisable()
     {
-        playerControls.Disable();
         OnStartTouch -= SwipeStart;
         OnEndTouch -= SwipeEnd;
     }
@@ -58,6 +57,11 @@ public class InputManager : Singleton<InputManager>
     {
         playerControls.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
         playerControls.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
+    }
+
+    public void StartControls()
+    {
+        playerControls.Enable();
     }
 
     private void StartTouchPrimary(InputAction.CallbackContext ctx) { if (OnStartTouch != null) OnStartTouch(ScreenPosition(), (float)ctx.startTime); }

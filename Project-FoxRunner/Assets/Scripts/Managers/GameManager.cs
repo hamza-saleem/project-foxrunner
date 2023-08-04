@@ -37,6 +37,7 @@ public class GameManager : Singleton<GameManager>
             UIManager.Instance.ShowUI();
             scrollCamera.enabled = true;
             bgScroll.enabled = true;
+            InputManager.Instance.StartControls();
         }
 
         if (gameStarted && player.position.y < deathHeight)
