@@ -22,18 +22,18 @@ public class SwipeDetection : MonoBehaviour
 
     private void OnEnable()
     {
-        inputManager.OnSwipeLeft += OnSwipeLeft;
-        inputManager.OnSwipeRight += OnSwipeRight;
-        inputManager.OnSwipeUp += OnSwipeUp;
-        inputManager.OnSwipeDown += OnSwipeDown;
+    //    inputManager.OnSwipeLeft += OnSwipeLeft;
+    //    inputManager.OnSwipeRight += OnSwipeRight;
+    //    inputManager.OnSwipeUp += OnSwipeUp;
+    //    inputManager.OnSwipeDown += OnSwipeDown;
     }
 
     private void OnDisable()
     {
-        inputManager.OnSwipeLeft -= OnSwipeLeft;
-        inputManager.OnSwipeRight -= OnSwipeRight;
-        inputManager.OnSwipeUp -= OnSwipeUp;
-        inputManager.OnSwipeDown -= OnSwipeDown;
+    //    inputManager.OnSwipeLeft -= OnSwipeLeft;
+    //    inputManager.OnSwipeRight -= OnSwipeRight;
+    //    inputManager.OnSwipeUp -= OnSwipeUp;
+    //    inputManager.OnSwipeDown -= OnSwipeDown;
     }
 
     private void OnSwipeLeft() => Debug.Log("Left swipe detected");

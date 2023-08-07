@@ -58,12 +58,14 @@ public class UIManager : Singleton<UIManager>
         SceneManager.LoadScene(name);
     }
 
-
+    public void OnBerryCollect()
+    {
+        scoreText.text = (20 + score + (int)player.transform.position.x).ToString() ;
+    }
 
     private void OnGUI()
     {
         scoreText.text = (score + (int)player.transform.position.x).ToString();
-        berryText.text = gameManager.GetBerryCount().ToString();
         myScoreGameOver.text = scoreText.text;
         myScorePause.text = scoreText.text;
     }

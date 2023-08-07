@@ -6,7 +6,6 @@ public class SideScrollingCamera : MonoBehaviour
     public float smoothSpeed = 0.125f; // The smoothing speed of the camera movement
 
     private Vector3 offset;
-    private Vector3 velocity = Vector3.zero;
 
     private void Start()
     {
@@ -20,13 +19,12 @@ public class SideScrollingCamera : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (target != null)
         {
             Vector3 targetPosition = target.position + offset;
             Vector3 smoothedPosition = Vector3.Slerp(transform.position, targetPosition, smoothSpeed);
-            //Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothSpeed);
             transform.position = new Vector3(smoothedPosition.x, 0, transform.position.z);
         }
     }

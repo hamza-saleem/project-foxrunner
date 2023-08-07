@@ -40,6 +40,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
         {
             HandleGroundedState();
             Run();
+
         }
 
         if (GameManager.Instance.GameOver())
@@ -72,7 +73,9 @@ public class PlayerMovement : Singleton<PlayerMovement>
     public void Jump()
     {
         if(isGrounded)
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        {
+           rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
     }
 
     private bool IsGrounded()
@@ -80,6 +83,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
         RaycastHit2D hit = Physics2D.BoxCast(transform.position + new Vector3(boxPositionOffset.x, boxPositionOffset.y, 0), boxSize, 0f, Vector2.down, maxDistance, layerMask);
         return hit.collider != null;
     }
+
 
     private void PlayerDeath()
     {
@@ -110,7 +114,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
             yield return null;
         }
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1.25f);
         UIManager.Instance.OnDeath();
     }
 

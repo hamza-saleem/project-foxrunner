@@ -830,7 +830,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0
-  far clip plane: 1000
+  far clip plane: 300
   field of view: 60
   orthographic: 1
   orthographic size: 6
@@ -1626,7 +1626,6 @@ GameObject:
   - component: {fileID: 1192578182}
   - component: {fileID: 1192578185}
   - component: {fileID: 1192578186}
-  - component: {fileID: 1192578187}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1662,7 +1661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumDistance: 2
-  maximumTime: 0.5
+  maximumTime: 0.25
   directionThreshold: 0.9
 --- !u!114 &1192578185
 MonoBehaviour:
@@ -1703,18 +1702,6 @@ MonoBehaviour:
   deathHeight: -10
   scrollCamera: {fileID: 519420033}
   bgScroll: {fileID: 1279505377}
---- !u!114 &1192578187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192578178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d3fed5ce9b3e246b74321f7e0bb0ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1212058342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,8 +2128,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3094,7 +3081,6 @@ GameObject:
   - component: {fileID: 1726553071}
   - component: {fileID: 1726553072}
   - component: {fileID: 1726553073}
-  - component: {fileID: 1726553074}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3201,12 +3187,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d25848a1f1eed424a9dd9909221d9d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 3
-  moveSpeed: 4
+  jumpForce: 3.5
+  moveSpeed: 3
   deathSpeed: 6
   boxSize: {x: 0.42, y: 0.06}
   boxPositionOffset: {x: -0.06, y: -0.05}
-  maxDistance: 0.46
+  maxDistance: 0.5
   layerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -3249,44 +3235,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.05, y: -0.15}
   m_Size: {x: 0.38, y: 0.75}
   m_Direction: 0
---- !u!114 &1726553074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726553067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: acb2a6db451928a46b676c7aaebd0c57, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 34963e0e-4669-49e5-b4c2-eeaa80625af6
-    m_ActionName: Touch/Primary Contact
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5bbbfaf0-fa95-4586-99ef-29f1aec8c687
-    m_ActionName: Touch/Primary Position
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Touch
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 519420031}
 --- !u!1 &1787490219
 GameObject:
   m_ObjectHideFlags: 0

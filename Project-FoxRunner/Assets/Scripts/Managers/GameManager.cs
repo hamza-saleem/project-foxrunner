@@ -12,14 +12,12 @@ public class GameManager : Singleton<GameManager>
     public bool gameStarted = false;
     [SerializeField] private int berryCount = 0;
 
-
     [SerializeField] private Transform player;
     [SerializeField] private float deathHeight = -10f;
-    [SerializeField] private SideScrollingCamera scrollCamera;
+  [SerializeField] private SideScrollingCamera scrollCamera;
     [SerializeField] private BackgroundScroller bgScroll;
 
     private bool isGameOver = false;
-
 
     private void Awake()
     {
@@ -31,36 +29,31 @@ public class GameManager : Singleton<GameManager>
     private void Update()
     {
 
-        if(Input.GetMouseButton(0) && !gameStarted)
+        if (Input.GetMouseButton(0) && !gameStarted)
         {
 
-           // InputManager.Instance.StartControls();
+            InputManager.Instance.StartControls();
             gameStarted = true;
             UIManager.Instance.ShowUI();
             scrollCamera.enabled = true;
             bgScroll.enabled = true;
         }
 
-        if (gameStarted && player.position.y < deathHeight)
+        if (FallToDeath() || DeathBySpike())
         {
             isGameOver = true;
             scrollCamera.enabled = false;
             bgScroll.enabled = false;
-
-           // UIManager.Instance.OnDeath();
         }
+
     }
+
+    private bool DeathBySpike() => TrapDeath.Instance.touchedSpike;
+    private bool FallToDeath() => gameStarted && player.position.y < deathHeight;
 
     public bool GameStart() => gameStarted;
     public bool GameOver() => isGameOver;
+    public void CollectItem() => UIManager.Instance.OnBerryCollect();
+    public int GetBerryCount() => berryCount;
 
-    public void CollectItem()
-    {
-        berryCount++;
-    }
-
-    public int GetBerryCount()
-    {
-        return berryCount;
-    }
 }

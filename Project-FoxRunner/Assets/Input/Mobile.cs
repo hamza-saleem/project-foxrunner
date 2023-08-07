@@ -29,12 +29,12 @@ public partial class @Mobile : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Primary Contact"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""34963e0e-4669-49e5-b4c2-eeaa80625af6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Primary Position"",

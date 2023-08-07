@@ -14,14 +14,6 @@ public class InputManager : Singleton<InputManager>
     public event EndTouch OnEndTouch;
 
 
-    public delegate void LeftSwipe();
-    public event LeftSwipe OnSwipeLeft;
-    public delegate void RightSwipe();
-    public event RightSwipe OnSwipeRight;
-    public delegate void UpSwipe();
-    public event UpSwipe OnSwipeUp;
-    public delegate void DownSwipe();
-    public event DownSwipe OnSwipeDown;
     #endregion
 
     [SerializeField] private float minimumDistance = 0.2f;
@@ -34,15 +26,19 @@ public class InputManager : Singleton<InputManager>
     private Mobile playerControls;
     private PlayerMovement player;
 
+    private Camera mainCamera;
+
+
     private void Awake()
     {
         playerControls = new Mobile();
         player = PlayerMovement.Instance;
+        mainCamera = Camera.main;
     }
 
     private void OnEnable()
     {
-        playerControls.Enable();
+       // playerControls.Enable();
         OnStartTouch += SwipeStart;
         OnEndTouch += SwipeEnd;
     }
@@ -66,10 +62,11 @@ public class InputManager : Singleton<InputManager>
         playerControls.Enable();
     }
 
-    private void StartTouchPrimary(InputAction.CallbackContext ctx) { if (OnStartTouch != null) OnStartTouch(ScreenPosition(), (float)ctx.startTime); }
-    private void EndTouchPrimary(InputAction.CallbackContext ctx) { if (OnEndTouch != null) OnEndTouch(ScreenPosition(), (float)ctx.time); }
 
     private Vector2 ScreenPosition() { return playerControls.Touch.PrimaryPosition.ReadValue<Vector2>(); }
+
+    private void StartTouchPrimary(InputAction.CallbackContext ctx) { if (OnStartTouch != null) OnStartTouch(Utils.ScreenToWorld(mainCamera, ScreenPosition()), (float)ctx.startTime) ; }
+    private void EndTouchPrimary(InputAction.CallbackContext ctx) { if (OnEndTouch != null) OnEndTouch(Utils.ScreenToWorld(mainCamera, ScreenPosition()), (float)ctx.time); }
 
     private void SwipeStart(Vector2 position, float time)
     { 
@@ -97,24 +94,16 @@ public class InputManager : Singleton<InputManager>
     private void SwipeDirection(Vector2 direction)
     {
         if (Vector2.Dot(Vector2.up, direction) > directionThreshold)
-        {
-            if (OnSwipeUp != null)
-            {
-                OnSwipeUp();
-                player.Jump();
-            }
-        }
+            player.Jump();
+   
         else if (Vector2.Dot(Vector2.down, direction) > directionThreshold)
         {
-            if (OnSwipeDown != null) OnSwipeDown();
         }
         else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
         {
-            if (OnSwipeLeft != null) OnSwipeLeft();
         }
         else if (Vector2.Dot(Vector2.right, direction) > directionThreshold)
         {
-            if (OnSwipeRight != null) OnSwipeRight();
         }
     }
 }
