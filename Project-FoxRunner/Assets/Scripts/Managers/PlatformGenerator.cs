@@ -38,9 +38,9 @@ public class PlatformGenerator : Singleton<PlatformGenerator>
 
         if (lastEndPosition.y > yLimit)
         {
-            offset.y = Random.Range(-5f, -1f);
-            Debug.Log(offset);
-            lastEndPosition = lastEndPosition + offset;
+            // offset.y = Random.Range(-4.9f, -4f);
+            //Debug.Log(offset);
+            lastEndPosition = new Vector3(lastEndPosition.x, -4.9f, lastEndPosition.z);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerMovement : Singleton<PlayerMovement>
 {
@@ -36,7 +37,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
     private void Update()
     {
-        if(GameManager.Instance.GameStart() && !GameManager.Instance.GameOver())
+        if(GameManager.Instance.gameStarted && !GameManager.Instance.GameOver())
         {
             HandleGroundedState();
             Run();
@@ -72,7 +73,11 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
     public void Jump()
     {
-        if(isGrounded)
+
+        if (PlayerPrefs.GetString("FirstPlay") == "Yes")
+            PlayerPrefs.SetString("FirstPlay", "No");
+
+        if (isGrounded)
         {
            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
@@ -115,6 +120,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
             yield return null;
         }
         yield return new WaitForSeconds(1.25f);
+
         UIManager.Instance.OnDeath();
     }
 

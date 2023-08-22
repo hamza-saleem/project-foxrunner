@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
-[DefaultExecutionOrder(-1)]
-public class InputManager : Singleton<InputManager>
+public class NewInputManager : MonoBehaviour
 {
     #region Events
     public delegate void StartTouch(Vector2 position, float time);
@@ -16,6 +18,8 @@ public class InputManager : Singleton<InputManager>
 
     #endregion
 
+
+
     [SerializeField] private float minimumDistance = 0.2f;
     [SerializeField] private float maximumTime = 1f;
     [SerializeField, Range(0f, 1f)] private float directionThreshold = 0.9f;
@@ -23,52 +27,55 @@ public class InputManager : Singleton<InputManager>
     private Vector2 startPosition, endPosition;
     private float startTime, endTime;
 
-    private Mobile playerControls;
-    private PlayerMovement player;
-
     private Camera mainCamera;
-
-
+    [SerializeField] private PlayerMovement player;
     private void Awake()
     {
-        playerControls = new Mobile();
-        player = PlayerMovement.Instance;
         mainCamera = Camera.main;
     }
-
-    private void OnEnable()
+    protected void OnEnable()
     {
-        playerControls.Enable();
+
+      //  TouchSimulation.Enable();
+        EnhancedTouchSupport.Enable();
         OnStartTouch += SwipeStart;
         OnEndTouch += SwipeEnd;
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
-
-        playerControls.Disable();
+      //  TouchSimulation.Disable();
+        EnhancedTouchSupport.Disable();
         OnStartTouch -= SwipeStart;
         OnEndTouch -= SwipeEnd;
     }
 
-    private void Start()
+
+    private void Update()
     {
-        playerControls.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
-        playerControls.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
+        foreach (Touch touch in Touch.activeTouches)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+               // Debug.Log("Started!" + touch.startScreenPosition);
+                StartTouchPrimary(touch);
+            }
+            
+            if (touch.phase == TouchPhase.Ended)
+            { 
+               // Debug.Log("Ended" + touch.screenPosition);
+                EndTouchPrimary(touch);
+            }
+
+        }
     }
 
-    public void StartControls()
-    {
-    }
+    private void StartTouchPrimary(Touch touch) { if (OnStartTouch != null) OnStartTouch(Utils.ScreenToWorld(mainCamera,touch.startScreenPosition), (float)touch.startTime); }
+    private void EndTouchPrimary(Touch touch) { if (OnEndTouch != null) OnEndTouch(Utils.ScreenToWorld(mainCamera, touch.screenPosition), (float)touch.time); }
 
-
-    private Vector2 ScreenPosition() { return playerControls.Touch.PrimaryPosition.ReadValue<Vector2>(); }
-
-    private void StartTouchPrimary(InputAction.CallbackContext ctx) { if (OnStartTouch != null) OnStartTouch(Utils.ScreenToWorld(mainCamera, ScreenPosition()), (float)ctx.startTime) ; }
-    private void EndTouchPrimary(InputAction.CallbackContext ctx) { if (OnEndTouch != null) OnEndTouch(Utils.ScreenToWorld(mainCamera, ScreenPosition()), (float)ctx.time); }
 
     private void SwipeStart(Vector2 position, float time)
-    { 
+    {
         startPosition = position;
         startTime = time;
     }
@@ -89,12 +96,11 @@ public class InputManager : Singleton<InputManager>
             SwipeDirection(direction2D);
         }
     }
-
     private void SwipeDirection(Vector2 direction)
     {
-        if (Vector2.Dot(Vector2.up, direction) > directionThreshold)
+        if (Vector2.Dot(Vector2.up, direction) > directionThreshold) 
             player.Jump();
-   
+
         else if (Vector2.Dot(Vector2.down, direction) > directionThreshold)
         {
         }
@@ -105,4 +111,5 @@ public class InputManager : Singleton<InputManager>
         {
         }
     }
+
 }
